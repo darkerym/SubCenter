@@ -2,50 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78d21491-8127-4d0a-9316-25572b2c5ddc" name="!changes.default.changelist.name!" comment="">
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\10.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\11.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\12-1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\12-2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\12.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\13.jpg" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14-1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14-2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14-3.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14-4.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14-5.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14-6.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14-7.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\14.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-3.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-4.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-5.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-6.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-7.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-8.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\15-9.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\16-1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\16-2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\3-1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\3-2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\4.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\5.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-1-1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-1-2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-1-3.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-1-4.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-1-5.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-2-1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-2-2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6-2-3.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\6.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\7-1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\7-2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\8.jpg" afterPath="" />
-      <change type="DELETED" beforePath="E:\Projects\SubCenter\resource\Contents\9.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="SubCenter.iws" />
@@ -70,8 +26,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43285373">
-              <caret line="229" column="38" selection-start-line="229" selection-start-column="38" selection-end-line="229" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.5467626">
+              <caret line="357" column="64" selection-start-line="357" selection-start-column="64" selection-end-line="357" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -271,8 +227,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43285373">
-          <caret line="229" column="38" selection-start-line="229" selection-start-column="38" selection-end-line="229" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.5467626">
+          <caret line="357" column="64" selection-start-line="357" selection-start-column="64" selection-end-line="357" selection-end-column="64" />
           <folding />
         </state>
       </provider>

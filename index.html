@@ -318,8 +318,9 @@
                 changeSence(event.wheelDeltaY /3 );
             });
             //手机触摸事件
-            canvasFrame.addEventListener("touchstart", touch, false);
-            canvasFrame.addEventListener('touchend',touch,false);
+            /*canvasFrame.addEventListener("touchstart", touch, false);
+            canvasFrame.addEventListener('touchend',touch,false);*/
+            canvasFrame.addEventListener('touchmove',touch,false);
         }
 
         //开场动画
@@ -353,7 +354,9 @@
                     changeSence(deltaY);
                     break;
                 case "touchmove":
-//                    event.preventDefault();
+                    event.preventDefault();
+                    var deltaY = event.changedTouches[0].clientY;
+                    changeSence(deltaY);
                     break;
             }
 
