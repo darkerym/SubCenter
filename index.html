@@ -356,7 +356,7 @@
                 case "touchmove":
                     event.preventDefault();
                     endY = event.changedTouches[0].clientY ;
-                    var deltaY = endY-startY;
+                    var deltaY = (endY-startY) / 3;
                     changeSence(deltaY);
                     break;
             }
