@@ -225,7 +225,8 @@
                 geometry.vertices[2].uv = new THREE.Vector2(contents[i]["width"],contents[i]["height"]);
                 geometry.vertices[3].uv = new THREE.Vector2(0,contents[i]["height"]);
                 var texture = THREE.ImageUtils.loadTexture(
-                    "resource/contents/" + contents[i]["path"], //相对位置
+                    "resource/pics/" + contents[i]["path"], //相对位置
+//                    "https://github.com/darkerym/SubCenter/blob/master/resource/Contents/" + contents[i]["path"],
                     null,function(t){}
                 );
                 var material  = new THREE.MeshBasicMaterial({map:texture,transparent:true});
