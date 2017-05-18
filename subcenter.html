@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="lib/three.js"></script>
+    <script src="lib/tween.min.js"></script>
+
+    <style type="text/css">
+        div#canvas-frame {
+            border: solid;
+            cursor: pointer;
+            width: 480px;
+            height: 800px;
+            background-color: #EEEEEE;
+        }
+        #loading *{vertical-align:middle;}
+    </style>
+    <title>创新思路、统筹协调、绿色地热、业务开放、成果共享，建设北京城市副中心“近零碳排放示范区”</title>
+    <script>
+        var frameWidth; var frameHeight;var canvasFrame;
+        window.onresize = function () {
+            resizeWindow();
+        }
+        //监控窗口大小变化，随窗口大小调整场景大小
+        function resizeWindow(){
+            var loadingDiv = document.getElementById("loading");
+
+            winWidth = document.documentElement.clientWidth;
+            winHeight = document.documentElement.clientHeight;
+            if(winWidth/winHeight<0.6){
+                frameWidth =winWidth;frameHeight = winWidth / 0.6;
+                loadingDiv.style.width = canvasFrame.style.width = winWidth + "px";
+                canvasFrame.style.height = winWidth / 0.6 + "px";
+            }
+            else{
+                frameWidth =winHeight * 0.6;frameHeight = winHeight;
+                loadingDiv.style.width = canvasFrame.style.width = winHeight * 0.6+ "px";
+                canvasFrame.style.height = winHeight+ "px";
+            }
+
+            renderer.setSize( frameWidth, frameHeight );
+        }
+
+        //初始化渲染器
+        var renderer;
+        function initThree() {
+            renderer = new THREE.WebGLRenderer({
+                antialias : true
+            });
+            renderer.setSize(frameWidth, frameHeight);
+            canvasFrame.appendChild(renderer.domElement);
+//            renderer.setClearColor(0x00CD66, 1.0);
+        }
+
+        //添加摄像头
+        var camera;
+        function initCamera() {
+            camera = new THREE.PerspectiveCamera(45, 0.6, 0.1, 10000);
+            camera.position.x = 0;
+            camera.position.y = 10;
+            camera.position.z = 2000;
+            camera.up.x = 0;
+            camera.up.y = 1;
+            /*camera.up.z = 0;
+            camera.lookAt({
+                x : 0,
+                y : 0,
+                z : 0
+            });*/
+        }
+
+        //添加场景
+        var scene;
+        function initScene() {
+            scene = new THREE.Scene();
+//            scene.fog=new THREE.Fog(0xDCDCDC,100,300);
+            scene.fog = new THREE.FogExp2(0xDCDCDC,0.00025);
+        }
+
+        //添加背景图片
+        var skyBox;
+        function initBackgroud(){
+            var skyBoxGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
+            var texture = new THREE.TextureLoader().load("resource/background-end.jpg");
+            var skyBoxMaterial = new THREE.MeshBasicMaterial( { map:texture, side: THREE.DoubleSide } );
+            skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+            scene.add(skyBox);
+        }
+
+        //添加线性光
+        var light;
+        function initLight() {
+            light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(0, 500, 2000);
+            scene.add(light);
+        }
+
+        //添加辅助线，完稿后注释
+        var helper;
+        function initGrid(){
+            helper = new THREE.GridHelper( 500, 50 );
+            helper.setColors( 0x0000ff, 0x808080 );
+            scene.add( helper );
+        }
+
+        //添加标题
+        var road; var titlePic; /*标题图片*/
+        function initRoad(){
+            /*var geometry = new THREE.PlaneGeometry(10,30,1,1);
+            geometry.vertices[0].uv = new THREE.Vector2(0,0);
+            geometry.vertices[1].uv = new THREE.Vector2(1,0);
+            geometry.vertices[2].uv = new THREE.Vector2(1,1);
+            geometry.vertices[3].uv = new THREE.Vector2(0,1);
+            var texture = THREE.ImageUtils.loadTexture(
+                 "resource/road_texture.jpg", //相对位置
+//                "http://172.16.7.191/ankangtong/three/img3/1.png",//这个是网络位置也行 不过大部分写
+                null,function(t){}
+            );
+            var material  = new THREE.MeshBasicMaterial({map:texture,transparent:true});
+            material.side=THREE.DoubleSide;//单面贴就删除
+            road = new THREE.Mesh(geometry,material);
+            scene.add(road);//加入到场景*/
+            //标题
+            var geometry = new THREE.PlaneGeometry(50,22,1,1);
+            geometry.vertices[0].uv = new THREE.Vector2(0,0);
+            geometry.vertices[1].uv = new THREE.Vector2(50,0);
+            geometry.vertices[2].uv = new THREE.Vector2(50,22);
+            geometry.vertices[3].uv = new THREE.Vector2(0,22);
+            var texture = THREE.ImageUtils.loadTexture(
+                "resource/title.png", //相对位置
+                null,function(t){}
+            );
+            var material  = new THREE.MeshBasicMaterial({map:texture,transparent:true});
+            material.side=THREE.DoubleSide;//单面贴就删除
+            titlePic = new THREE.Mesh(geometry,material);
+            titlePic.position.z=1600;
+            titlePic.position.y=10;
+            scene.add(titlePic);//加入到场景
+            showTitle();
+        }
+
+        //添加标题入场动画
+        function showTitle(){
+            if(titlePic.position.z < 1900) {
+                titlePic.position.z +=5;
+                renderer.render(scene, camera);
+                requestAnimationFrame(showTitle);
+            }
+            else {
+                window.setTimeout("startAnimation()",1500);
+            }
+        }
+
+        //批量初始化内容图片
+        var contents = [
+            /*2014年*/
+            {"path":"1.png","width":50,"height":26,"positionX":0,"positionY":0,"positionZ":1680,"rotationX":0,"rotationY":0,"rotationZ":0},
+            /*2015年*/
+            {"path":"2.png","width":45,"height":26,"positionX":0,"positionY":0,"positionZ":1550,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"3-1.png","width":14,"height":20,"positionX":-12,"positionY":0,"positionZ":1440,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"3-2.png","width":26,"height":13,"positionX":8,"positionY":0,"positionZ":1440,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"4.png","width":13,"height":18,"positionX":0,"positionY":0,"positionZ":1390,"rotationX":0,"rotationY":0,"rotationZ":0},
+            /*2016年*/
+            {"path":"5.png","width":28,"height":24,"positionX":15,"positionY":-10,"positionZ":1240,"rotationX":0,"rotationY":-0.5,"rotationZ":0},
+            {"path":"6.png","width":20,"height":28,"positionX":0,"positionY":-10,"positionZ":1150,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-1.png","width":6,"height":15,"positionX":14,"positionY":-6,"positionZ":1170,"rotationX":0,"rotationY":-0.5,"rotationZ":0},
+            {"path":"6-1-2.png","width":6,"height":15,"positionX":8,"positionY":-18,"positionZ":1162,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-3.png","width":6,"height":15,"positionX":11,"positionY":-5,"positionZ":1160,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-4.png","width":6,"height":15,"positionX":12,"positionY":-17,"positionZ":1161,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-5.png","width":6,"height":15,"positionX":14,"positionY":-1,"positionZ":1159,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-2-1.png","width":5,"height":10,"positionX":-9,"positionY":-6,"positionZ":1170,"rotationX":0,"rotationY":0.5,"rotationZ":0},
+            {"path":"6-2-2.png","width":8,"height":10,"positionX":-14,"positionY":0,"positionZ":1160,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-2-3.png","width":9,"height":10,"positionX":-15,"positionY":-18,"positionZ":1158,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"7-1.jpg","width":13,"height":25,"positionX":-7,"positionY":0,"positionZ":1100,"rotationX":0,"rotationY":0.5,"rotationZ":0},
+            {"path":"7-2.jpg","width":13,"height":25,"positionX":7,"positionY":0,"positionZ":1100,"rotationX":0,"rotationY":-0.5,"rotationZ":0},
+            {"path":"8.jpg","width":15,"height":11,"positionX":-3,"positionY":0,"positionZ":1040,"rotationX":0,"rotationY":0.3,"rotationZ":0},
+            {"path":"9.jpg","width":15,"height":12,"positionX":3,"positionY":0,"positionZ":1000,"rotationX":0,"rotationY":-0.3,"rotationZ":0},
+            {"path":"10.png","width":10,"height":15,"positionX":-3,"positionY":0,"positionZ":960,"rotationX":0,"rotationY":0.5,"rotationZ":0},
+            /*2017年*/
+            {"path":"11.png","width":15,"height":10,"positionX":-5,"positionY":0,"positionZ":860,"rotationX":0,"rotationY":0.5,"rotationZ":0},
+            {"path":"12.png","width":18,"height":12,"positionX":0,"positionY":3,"positionZ":825,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"12-1.png","width":5,"height":3,"positionX":-5,"positionY":0,"positionZ":840,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"12-2.png","width":5,"height":3,"positionX":5,"positionY":0,"positionZ":840,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"13.jpg","width":11,"height":15,"positionX":0,"positionY":0,"positionZ":755,"rotationX":0,"rotationY":0,"rotationZ":0},
+            /*所有人物*/
+            {"path":"14.png","width":40,"height":30,"positionX":0,"positionY":10,"positionZ":600,"rotationX":0,"rotationY":0,"rotationZ":0},
+            /*院*/
+            {"path":"14-1.png","width":5,"height":4,"positionX":-3,"positionY":-1,"positionZ":650,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"14-2.png","width":2.5,"height":4.5,"positionX":0,"positionY":-1,"positionZ":650,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"14-3.png","width":3,"height":4,"positionX":-5.5,"positionY":-1,"positionZ":649,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"14-4.png","width":3.2,"height":4,"positionX":2,"positionY":-1,"positionZ":650,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"14-6.png","width":1.5,"height":4,"positionX":-6.8,"positionY":-1,"positionZ":650,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"14-5.png","width":2.5,"height":4,"positionX":4.5,"positionY":-1,"positionZ":650,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"14-7.png","width":2.9,"height":4,"positionX":6,"positionY":-1,"positionZ":650,"rotationX":0,"rotationY":0,"rotationZ":0},
+            /*局*/
+            {"path":"15-1.png","width":2.44,"height":6,"positionX":-0.5,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-2.png","width":2.52,"height":6,"positionX":1.3,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-3.png","width":2.52,"height":6,"positionX":-2.4,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-4.png","width":2.52,"height":6,"positionX":3,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-5.png","width":2.7,"height":6,"positionX":-4.3,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-6.png","width":2.5,"height":6,"positionX":5.3,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-7.png","width":2.24,"height":6,"positionX":-6.5,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-8.png","width":2.52,"height":6,"positionX":7.5,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"15-9.png","width":2.52,"height":6,"positionX":-8.3,"positionY":-1,"positionZ":640,"rotationX":0,"rotationY":0,"rotationZ":0},
+            /*专家、其他单位*/
+            {"path":"6-1-1.png","width":3,"height":8,"positionX":0,"positionY":-1,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-2.png","width":3,"height":8,"positionX":1.5,"positionY":-1,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-3.png","width":3,"height":8,"positionX":-2,"positionY":-1,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-4.png","width":3,"height":8,"positionX":3,"positionY":-1,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-1-5.png","width":3,"height":8,"positionX":-3.5,"positionY":-1,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-2-1.png","width":3,"height":7,"positionX":7.3,"positionY":-1,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-2-2.png","width":3.3,"height":4,"positionX": 5,"positionY":-0.7,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"6-2-3.png","width":3.8,"height":4,"positionX":9.8,"positionY":-0.7,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"16-1.png","width":3.1,"height":8,"positionX":-5.5,"positionY":-1,"positionZ":625,"rotationX":0,"rotationY":0,"rotationZ":0},
+            {"path":"16-2.png","width":3,"height":7,"positionX":-8,"positionY":-1,"positionZ":624,"rotationX":0,"rotationY":0,"rotationZ":0},
+        ]
+        function initContents(){
+            for(var i=0; i<contents.length; i++)
+            {
+                /*console.log(contents[i]);
+                console.log(contents[i]["path"]);*/
+                var geometry = new THREE.PlaneGeometry(contents[i]["width"],contents[i]["height"],1,1);
+                geometry.vertices[0].uv = new THREE.Vector2(0,0);
+                geometry.vertices[1].uv = new THREE.Vector2(contents[i]["width"],0);
+                geometry.vertices[2].uv = new THREE.Vector2(contents[i]["width"],contents[i]["height"]);
+                geometry.vertices[3].uv = new THREE.Vector2(0,contents[i]["height"]);
+                var texture = THREE.ImageUtils.loadTexture(
+                    "resource/contents/" + contents[i]["path"], //相对位置
+                    null,function(t){}
+                );
+                var material  = new THREE.MeshBasicMaterial({map:texture,transparent:true});
+                material.side=THREE.DoubleSide;//单面贴就删除
+                var mesh = new THREE.Mesh(geometry,material);
+                mesh.position.x=contents[i]["positionX"];
+                mesh.position.y=contents[i]["positionY"];
+                mesh.position.z = contents[i]["positionZ"];
+                mesh.rotation.x = contents[i]["rotationX"];
+                mesh.rotation.y = contents[i]["rotationY"];
+                mesh.rotation.z = contents[i]["rotationZ"];
+                scene.add(mesh);//加入到场景
+            }
+
+        }
+
+        //初始化文字（年份）
+        var chars = [
+            {"value":"2014年","positionZ":1700, "positionX":-10},
+            {"value":"2015年","positionZ":1580, "positionX":-10},
+            {"value":"2016年","positionZ":1250, "positionX":-10},
+            {"value":"2017年","positionZ":850, "positionX":15},
+        ]
+        function initChar(){
+            for(var i=0; i< chars.length; i++)
+            {
+                initSingleChar(i,chars[i]["value"],chars[i]["positionZ"],chars[i]["positionX"]);
+            }
+        }
+
+        var isLoadComplete = false;
+        function initSingleChar(i,val, z, x){
+            var text = new THREE.FontLoader().load('resource/Microsoft YaHei_Regular.json', function(text) {
+                var gem = new THREE.TextGeometry(val, {
+                    size: 5, //字号大小，一般为大写字母的高度
+                    height: 3, //文字的厚度
+                    weight: 'normal', //值为'normal'或'bold'，表示是否加粗
+                    font: text, //字体，默认是'helvetiker'，需对应引用的字体文件
+                    style: 'normal', //值为'normal'或'italics'，表示是否斜体
+                    bevelThickness: 1, //倒角厚度
+                    bevelSize: 1, //倒角宽度
+                    curveSegments: 30,//弧线分段数，使得文字的曲线更加光滑
+                    bevelEnabled: true, //布尔值，是否使用倒角，意为在边缘处斜切
+                });
+                gem.center();
+                var mat = new THREE.MeshPhongMaterial({
+                    color: 0xffe502,
+                    specular: 0x009900,
+                    shininess: 30,
+                    shading: THREE.FlatShading
+                });
+                var textObj = new THREE.Mesh(gem, mat);
+                textObj.castShadow = true;
+                textObj.position.z = z;
+                textObj.position.y = -10;
+                textObj.position.x = x;
+                scene.add(textObj);
+
+                if(i == chars.length - 1) isLoadComplete = true;
+            });
+        }
+
+        //页面加载完毕后初始化操作
+        function threeStart(){
+            canvasFrame = document.getElementById("canvas-frame");
+
+            initThree();
+            resizeWindow();
+            initCamera();
+            initScene();
+            initBackgroud();
+
+
+
+
+            initLight();
+            initChar();
+            initRoad();
+//            initGrid();
+            initContents();
+
+
+
+
+            render();
+
+            //鼠标滚轮滑动时间
+            canvasFrame.addEventListener("mousewheel", function(event) {
+                changeSence(event.wheelDeltaY /3 );
+            });
+            //手机触摸事件
+            canvasFrame.addEventListener("touchstart", touch, false);
+            canvasFrame.addEventListener('touchend',touch,false);
+        }
+
+        //开场动画
+        function startAnimation(){
+            if(camera.position.z<= 680){return;}
+            else{camera.position.z -=20;
+                renderer.render(scene, camera);
+                requestAnimationFrame(startAnimation);}
+        }
+
+        //渲染器定时更新
+        function render() {
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+            //cube.rotation.x += 0.1;
+            //cube.rotation.y += 0.1;
+        }
+
+        //手机触摸事件
+        var startY; var endY;
+        function touch (event){
+            var event = event || window.event;
+
+            switch(event.type){
+                case "touchstart":
+                    startY = event.touches[0].clientY;
+                    break;
+                case "touchend":
+                    endY = event.changedTouches[0].clientY ;
+                    var deltaY = endY-startY;
+                    changeSence(deltaY);
+                    break;
+                case "touchmove":
+//                    event.preventDefault();
+                    break;
+            }
+
+        }
+
+        //场景前后变换
+        function changeSence(deltaY){
+            if(camera.position.z>= 2000 && deltaY>0){
+                camera.position.z= 2000;
+                return;}
+            else if(camera.position.z<= 680 && deltaY<0){
+                camera.position.z= 680;
+                return;}
+            else{camera.position.z +=deltaY;
+//                console.log(camera.position.z);
+            }
+            if(camera.position.z <= 1000)scene.fog = new THREE.FogExp2(0xDCDCDC,0.00015);
+            else scene.fog = new THREE.FogExp2(0xDCDCDC,0.00025);
+//            helper.rotation.x += deltaY/120;
+//            road.rotation.x+=1;
+        }
+
+        //显示加载动画
+        var timeLoading;
+        function loading(){
+            document.getElementById("loading").style.display = "block";
+
+            if(isLoadComplete){
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("canvas-frame").style.display = "block";
+                window.clearTimeout(timeLoading);
+            }
+            else{
+                timeLoading = window.setTimeout('loading()',500);
+                document.getElementById("canvas-frame").style.display = "none";
+            }
+
+        }
+    </script>
+</head>
+<body onload="loading();threeStart();">
+    <p id="loading" style="z-index: 100; color: crimson; top: 30%; position: absolute; text-align: center "><img src="resource/loading.gif"></p>
+    <div id="canvas-frame"></div>
+</body>
+</html>
