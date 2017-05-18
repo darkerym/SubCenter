@@ -318,8 +318,8 @@
                 changeSence(event.wheelDeltaY /3 );
             });
             //手机触摸事件
-            /*canvasFrame.addEventListener("touchstart", touch, false);
-            canvasFrame.addEventListener('touchend',touch,false);*/
+            canvasFrame.addEventListener("touchstart", touch, false);
+            /*canvasFrame.addEventListener('touchend',touch,false);*/
             canvasFrame.addEventListener('touchmove',touch,false);
         }
 
@@ -355,7 +355,8 @@
                     break;
                 case "touchmove":
                     event.preventDefault();
-                    var deltaY = event.changedTouches[0].clientY;
+                    endY = event.changedTouches[0].clientY ;
+                    var deltaY = endY-startY;
                     changeSence(deltaY);
                     break;
             }
